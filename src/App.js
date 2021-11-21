@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { TextField, Box } from '@mui/material';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function Input() {
+
+    const copyTextToClipboard = async event => {
+        if ('target' in event)
+        {
+            const value = event.target.value;
+            let text = "";
+            for (let i in value) {
+                text += value[i] + '\uFEFF'
+            }
+            if ('clipboard' in navigator) {
+                return await navigator.clipboard.writeText(text);
+            } else {
+                return document.execCommand('copy', true, text);
+            }
+        }
+    }
+
+    return (
+        <Box sx={{ p: 15 }} >
+            <TextField rows={9}
+
+                multiline onChange={copyTextToClipboard}
+                label="Type here"
+                variant="outlined"
+                fullWidth />
+        </Box>
+
+    );
 }
 
-export default App;
+export default Input;
