@@ -1,10 +1,8 @@
 import { TextField, Box } from '@mui/material';
-
+import {c} from './App.css'
 function Input() {
-
     const copyTextToClipboard = async event => {
-        if ('target' in event)
-        {
+        if ('target' in event) {
             const value = event.target.value;
             let text = "";
             for (let i in value) {
@@ -17,18 +15,24 @@ function Input() {
             }
         }
     }
+    return document.queryCommandSupported('copy') ?
+        (
+            <Box sx={{ p: 15 }}>
+                <TextField rows={9}
+                    multiline onChange={copyTextToClipboard}
+                    label="Type here"
+                    variant="outlined"
+                    fullWidth
+                />
+            </Box>
+        )
+        :
+        (
+            <div className={c}>
+                <p>Not supported!</p>
+            </div>
+        )
 
-    return (
-        <Box sx={{ p: 15 }} >
-            <TextField rows={9}
-
-                multiline onChange={copyTextToClipboard}
-                label="Type here"
-                variant="outlined"
-                fullWidth />
-        </Box>
-
-    );
 }
 
 export default Input;
